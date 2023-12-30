@@ -20,3 +20,4 @@ def get_files_in_input_directory(input_directory: str):
         input_directory + fileName for fileName in listdir(input_directory)
     ]
     filesToEncode = filter(path.isfile, filesInInputDirectory)  # exclude folders
+    return filesToEncode
