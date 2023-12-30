@@ -9,6 +9,7 @@ from config import (
     OUTPUT_FILE_EXTENSION,
 )
 
+
 # example : ffmpeg -i i.mp4 -f mp4 -s 1920x1080 -b 6000k -r 30 -vcodec libx264 -preset veryslow -threads auto o.mp4
 def encode_file(
     input_file_path,

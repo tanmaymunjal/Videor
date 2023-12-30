@@ -15,6 +15,7 @@ def format_input_directory_path(input_directory: str) -> str:
     )  # to check if it ends in a /, and if not add the / to it.
     return input_directory
 
+
 def get_files_in_input_directory(input_directory: str):
     filesInInputDirectory = [
         input_directory + fileName for fileName in listdir(input_directory)
