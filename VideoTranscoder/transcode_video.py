@@ -4,14 +4,11 @@ Inspired by https://gist.github.com/hleb-albau/dced8b57fdb5d458f430
 """
 from os import path
 from subprocess import call
-from config import (
-    FFMPEG_PATH,
-    OUTPUT_FILE_EXTENSION,
-)
 
 
 # example : ffmpeg -i i.mp4 -f mp4 -s 1920x1080 -b 6000k -r 30 -vcodec libx264 -preset veryslow -threads auto o.mp4
 def encode_file(
+    ffmpeg,
     input_file_path,
     output_directory,
     output_file_extension,
@@ -25,7 +22,7 @@ def encode_file(
     )
     call(
         [
-            FFMPEG_PATH,
+            ffmpeg,
             "-i",
             input_file_path,
             "-f",
