@@ -1,18 +1,14 @@
-import torchaudio
+import librosa
 from transformers import pipeline
 import torch
 import subprocess
+from SubtitleGenerator.utils import load_waveform
 
 
-def convert_m4a_to_wav(video_path: str, wav_path: str, sample_rate: int = 16000):
+def convert_video_to_wav(video_path: str, wav_path: str, sample_rate: int = 16000):
     command = f"ffmpeg -i {video_path} -vn -acodec pcm_s16le -ar {sample_rate} -ac 2 {wav_path}"
     subprocess.call(command, shell=True)
     return wav_path
-
-
-def load_waevform(wav_path: str):
-    waveform, _ = torchaudio.load(wav_path)
-    return waveform
 
 
 def transcribe_audio_with_huggingface(audio_file_path):

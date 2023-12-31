@@ -17,9 +17,9 @@ with open("requirements.txt") as f:
     required = f.read().splitlines()
 
 setup(
-    name="VideoTranscoder",
+    name="Videor",
     version="0.0.1",
-    url="https://github.com/defi-os/defios-python-apis.git",
+    url="https://github.com/tanmaymunjal/Videor",
     license="MIT License",
     author="Tanmay Munjal",
     author_email="tanmaymunjal64@gmail.com",
