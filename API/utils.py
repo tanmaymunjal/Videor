@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 def check_file_exists(file_path: str):
-    return os.path.isfile(path)
+    return os.path.isfile(file_path)
 
 
 def create_needed_folders():
