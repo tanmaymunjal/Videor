@@ -27,9 +27,9 @@ def transcribe_audio_with_huggingface(audio_file_path):
     )
 
     # Load the audio file
-    waveform = load_waevform(audio_file_path)
+    waveform = load_waveform(audio_file_path)
 
     # Transcribe audio
-    transcription = asr_pipeline(waveform.numpy()[0])
+    transcription = asr_pipeline(waveform)
 
     return transcription
