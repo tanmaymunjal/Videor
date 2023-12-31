@@ -13,13 +13,23 @@ from SubtitleGenerator.subtitle_generator import (
 )
 from ThumbnailGeneration.thumbnail import create_image_thumbnail
 from VideoTranscoder.transcode_video import encode_file
-from utils import check_file_exists
+from utils import check_file_exists, create_needed_folders
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 import aiofiles
 
 app = FastAPI()
+
+# creates all statiic folders need to mount
+# leaves the folder alone if exists already
+create_needed_folders()
+
+app.mount("/video", StaticFiles(directory="Videos/"), name="video")
+app.mount("/thumbnail", StaticFiles(directory="Thumbnails/"), name="thumbnail")
+app.mount("/segment", StaticFiles(directory="Segments/"), name="segment")
+app.mount("/audio", StaticFiles(directory="Audios/"), name="audio")
 
 
 @app.post("/upload_video")
@@ -48,6 +58,8 @@ async def generate_thumbnail(video_file_path: str):
 
 @app.post("/generate_segments")
 async def generate_segments(video_file_path: str):
+    parsed_file_path = video_file_path.split(".")
+    video_file_path = parsed_file_path[0] + "%d." + parsed_file_path[1]
     segment_path = f"Segments/{video_file_path}"
     create_segments(video_file_path, segment_path)
     return JSONResponse(
