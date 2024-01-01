@@ -8,7 +8,6 @@ from subprocess import call
 
 # example : ffmpeg -i i.mp4 -f mp4 -s 1920x1080 -b 6000k -r 30 -vcodec libx264 -preset veryslow -threads auto o.mp4
 def encode_file(
-    ffmpeg,
     input_file_path,
     output_directory,
     output_file_extension,
@@ -22,7 +21,7 @@ def encode_file(
     )
     call(
         [
-            ffmpeg,
+            "ffmpeg",
             "-i",
             input_file_path,
             "-f",
@@ -44,6 +43,7 @@ def encode_file(
             output_file_path,
         ]
     )
+    return output_file_path
 
 
 def compile_output_file_name(

@@ -6,7 +6,7 @@ The balancer service ensures which video requests should be distributed to which
 all video processing happens locally to ensure minimum bandwidth required to push videos here and there
 """
 
-from SegmentGeneration.segment_generation import create_segments
+from SegmentGenerator.segment_generation import create_segments
 from SubtitleGenerator.subtitle_generator import (
     convert_video_to_wav,
     transcribe_audio_with_huggingface,
@@ -43,6 +43,11 @@ app.mount("/video", AuthStaticFiles(directory="Videos/"), name="video")
 app.mount("/thumbnail", AuthStaticFiles(directory="Thumbnails/"), name="thumbnail")
 app.mount("/segment", AuthStaticFiles(directory="Segments/"), name="segment")
 app.mount("/audio", AuthStaticFiles(directory="Audios/"), name="audio")
+app.mount(
+    "/trancoded_video",
+    AuthStaticFiles(directory="TrancodedVideos/"),
+    name="trancoded_video",
+)
 
 
 @app.post("/token", response_model=Token)
@@ -79,6 +84,32 @@ async def upload_video(
         await out_file.write(content)  # async write
 
     return JSONResponse(status_code=status.HTTP_200_OK, content={"Result": "OK"})
+
+
+@app.post("/transcode_video")
+async def transcode_video(
+    current_user: Annotated[User, Depends(get_current_active_user)],
+    video_file_path: str,
+    output_file_extension: str,
+    dimension: str,
+    bitrate: str,
+    framerate: str,
+    preset: str,
+):
+    output_directory_path = "TrancodedVideos/"
+    video_file_path = f"Videos/{video_file_path}"
+    output_file_path = transcode_video(
+        video_file_path,
+        output_directory,
+        output_file_extension,
+        dimension,
+        bitrate,
+        framerate,
+        preset,
+    )
+    return JSONResponse(
+        status_code=status.HTTP_200_OK, content={"trancoded_video": output_file_path}
+    )
 
 
 @app.post("/generate_thumbnail")
