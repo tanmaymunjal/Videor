@@ -3,7 +3,7 @@
 An open source low-level API to allow you to transcode videos and generate subtitles, thumbnails, and video segments. Built on top of the **ffmpeg**(https://github.com/FFmpeg/FFmpeg) and **OpenAI Whisper model**(https://huggingface.co/openai/whisper-medium), it is designed to be a simple and easy to use Asynchronous API wrapper over well maintained and optimised utilties that you can quickly setup and hit the ground running in no time!
 
 ### Setting up the project
-
+Note: Project setup and scripts are tested on Unix environments. You may need to change the setup.sh to make it run on other environemnts
 1) Git clone the project to your local
    ```
    git clone https://github.com/tanmaymunjal/Videor.git 
